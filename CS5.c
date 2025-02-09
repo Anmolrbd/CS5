@@ -2,6 +2,7 @@
 #include<conio.h>
 #include<stdlib.h>
 #include<time.h>
+#include<math.h>
 
 //okay okay i ain't that smart, i did chatgpt the clearScreen function
 void clearScreen() {
@@ -321,16 +322,23 @@ int home(){
  the generated number ,the console will print \"Too High\" and if your guess is lower, the console will print \"Too Low\"\n");
 				getch();
 				srand(time(0));
+				
 				int randnum=(rand()%(100-1+1))+1,guess=10,num=-1;
 				while(guess>=1 || randnum!=num){
 					printf("No. of guesses left:%d\n",guess);
 					printf("Guess:");
 					scanf("%d",&num);
-					if(randnum>num){
+					if((randnum - num) >=10){
 						printf("Too Low.\n");
 					}
-					else if(randnum<num){
+					else if(randnum>num && (randnum - num)>0 && (randnum - num)<10){
+						printf("Low.\n");
+					}
+					else if((randnum - num)<=-10){
 						printf("Too High.\n");
+					}
+					else if(randnum<num && (randnum - num)>-10 && (randnum - num)<0){
+						printf("High.\n");
 					}
 					else{
 						printf("CORRECT!!!\n");
@@ -415,7 +423,14 @@ int home(){
 				srand(time(0));
 				int randnum=(rand()%((int)(pow(10,n)-1)-(int)(pow(10,n-1))+1))+(int)pow(10,n-1);
 				printf("Your number is %i.",randnum);
-				getch();
+				time_t start_time = time(NULL); 
+    				time_t time_limit = 5;
+   				 while (1) {
+       				 if (time(NULL) - start_time >= time_limit) {
+          					  printf("Time limit exceeded!\n");
+           					 break;
+       					}
+   					 }
 				clearScreen();
 				int num;
 				printf("Enter the number:");
