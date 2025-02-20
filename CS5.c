@@ -1,10 +1,21 @@
 #include<stdio.h>
 #include<conio.h>
-#include<stdlib.h>
 #include<time.h>
 #include<math.h>
-
-//okay okay i ain't that smart, i did chatgpt the clearScreen function
+struct user{
+	char username[100];
+	int timePlayed;
+	float ticTacToeHighScore;
+	float rockPaperScissorsHighScore;
+	float guessTheNumberHighScore;
+	int guessesLeft;
+	float headsOrTailsHighScore;
+	float rememberTheNumber;
+	int digit;
+};
+struct user user1;
+char username[100];
+int logKey=1;
 void clearScreen() {
     #ifdef _WIN32
         system("cls");  // Windows
@@ -13,16 +24,16 @@ void clearScreen() {
     #endif
 }
 
-//Functions
-			int checkSpaces(char grid[][3]){
-					int spaces=0,i,j;
-					for(i=0;i<3;i++){
-				    	for(j=0;j<3;j++){
-					        if(grid[i][j]==0){
-					        	spaces++;
-							}
-				    	}
-				    }
+int checkSpaces(char grid[][3]){
+		
+	int spaces=0,i,j;
+	for(i=0;i<3;i++)
+	{
+	for(j=0;j<3;j++){			   
+		if(grid[i][j]==0){
+			spaces++;
+		}}
+		  }
 				    if(spaces==0){
 				    	return 0;
 					}
@@ -56,7 +67,6 @@ void clearScreen() {
 					else if(grid[0][2]=='x' && grid[1][1]=='x' && grid[2][0]=='x'){
 						return 0;
 					}
-					//
 				    else if(grid[0][0]=='o' && grid[0][1]=='o' && grid[0][2]=='o'){
 						return 0;
 					}
@@ -154,6 +164,48 @@ void clearScreen() {
 					
 					
 int home(){
+	int option=1;
+	while(option!=3){
+	    printf("=============================================================================\n");
+	printf("                                  CS5 Games\n");
+	printf("=============================================================================\n");
+	printf("1.Sign Up\n");
+	printf("2.Login\n");
+	printf("3.Exit\n");	
+	printf("Choose your option:");
+    	scanf("%d",&option);
+	    switch(option){
+	    	FILE *fptr3;
+		    case 1:
+			 fptr3  = fopen("users.txt","a+");
+		    	while(logKey==1){
+		    	printf("Enter a username:");
+		    	scanf("%s",username);
+		    	fprintf(fptr3,"%s\n",username);
+		    	fclose(fptr3);
+		    	home();
+		    	logKey++;
+		    }
+		    case 2:
+		    	{
+		    			FILE *fptr4=fopen("users.txt","r");
+		    	while(fscanf(fptr4,"%s %d %.1f %.1f %.1f %d %.1f %.1f %d",user1.username,&user1.timePlayed,&user1.ticTacToeHighScore,&user1.rockPaperScissorsHighScore,&user1.guessTheNumberHighScore,&user1.guessesLeft,&user1.headsOrTailsHighScore,&user1.rememberTheNumber,&user1.digit)!=EOF)
+			    {
+			    	printf("Enter your usename: ");
+			    	scanf("%s",user1.username);
+		    		if(strcmp(user1.username,username)==0){
+		    			printf("LOGIN SUCCESSFUL!!!\n");
+		    			break;
+		    		}
+		    		else{
+		    			printf("You haven't logged in.\n");
+		    			home();
+				    }
+			    }
+			    fclose(fptr4);
+		}
+		    
+		    		
 	printf("=============================================================================\n");
 	printf("                                  CS5 Games\n");
 	printf("=============================================================================\n");
@@ -453,12 +505,10 @@ int home(){
 			return 0;
 		break;
 	}
+	fclose(fptr3);
     return 0;
-}
+}}}
 
-//=============================================================================================================================================
-//=============================================================================================================================================
-//=============================================================================================================================================
 
 int main(){
 	home();
